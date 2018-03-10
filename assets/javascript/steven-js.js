@@ -41,11 +41,11 @@ $(function(){
     
     
     function initMap() {
-
+        //need to change the default location somehow
         // map options   zoom max is 14. 
         var options = {
             zoom: 12,
-            center: { lat: 38.8323, lng: -94.5960 },
+            center: {lat: 50, lng: 50}
         }
         // Create a map object and specify the DOM element for display.
         var map = new google.maps.Map(document.getElementById('map'), options);
