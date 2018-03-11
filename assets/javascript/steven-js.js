@@ -41,27 +41,30 @@ $(function(){
             var locationLng = snapshot.val().lng;
             console.log("lat: " + locationLat);
             console.log("lng: " + locationLng);
+            
         });
 });
 
     });
 
-    
+   
     
     function initMap() {
         //need to change the default location somehow
         // map options   zoom max is 14. 
+        // var buttonLocation = [locationLat, locationLng];
+        // console.log(buttonLocation);
         var options = {
             zoom: 12,
-            center: {lat: 39.1658578, lng: -94.5160497}
+            center: {lat:39.0997, lng:-94.5786}
         }
         // Create a map object and specify the DOM element for display.
         var map = new google.maps.Map(document.getElementById('map'), options);
 
-        /*
+        
         // add a marker 
         var marker = new google.maps.Marker({
-            position: {lat: 38.8135, lng: -94.5990}, 
+            position: {lat: 39.0997, lng: -94.5786}, 
             map: map
         });
 
@@ -71,7 +74,7 @@ $(function(){
         marker.addListener('click', function(){
             infoWindow.open(map, marker);
         })
-        */
+        
 
         addMarker({lat: 38.8135,lng: -94.5990});
 
