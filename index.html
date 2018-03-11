@@ -6,17 +6,179 @@
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
+	crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets\css\style.css">
   <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
 
   <link rel="stylesheet" type="text/css" href="assets/css/steven-css.css">
 </head>
 <body>
-  
+		<div class="container-fluid" style="padding:5px">
+			<div class="jumbotron">
+				<div class="col-lg-12">
+					<div class="panel-heading">
+						<h1>
+							Let's Take a Road Trip!
+						</h1>
+					</div>
+				</div>
+			</div>
+		</div> 
+		<div class="container-fluid"> 
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel" id="restaurant">
+					<div class="panel-heading">
+						<h5>Location Search</h5>
+					</div>
+					<div class="panel-body" id="test">
+						<form role="form">
+							<div class="form-group">
+								<label for="restaurants">Name</label>
+								<input type="text" class="form-control" id="restaurant" name="restaurant">
+								<button class="btn" type="submit" id="formsubmit" style="padding:6px">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="panel">
+					<div class="panel-heading">
+						<h4>Restaurants</h4>
+					</div>
+					<div class="panel-body" id="gas">
+						<div class="row">
+							<div class="col-md-12 bold">
+								<ul style="list-style: circle">
+									<li>
+										<div class="data">Field 1</div>
+									</li>
+									<li>
+										<div class="data">Field 2</div>
+									</li>
+									<li>
+										<div class="data">Field 3</div>
+									</li>
+									<li>
+										<div class="data">Field 4</div>
+									</li>
+									<li>
+										<div class="data">Field 5</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-lg-4">
+				<div class="panel">
+					<div class="panel-heading">
+						<h4>Location</h4>
+					</div>
+					<div class="panel-body" id="gas">
+						<div class="row">
+							<div class="col-md-12 bold">
+								<ul style="list-style: circle">
+									<li>
+										<div class="data">Field 1</div>
+									</li>
+									<li>
+										<div class="data">Field 2</div>
+									</li>
+									<li>
+										<div class="data">FIeld 3</div>
+									</li>
+									<li>
+										<div class="data">Field 4</div>
+									</li>
+									<li>
+										<div class="data">FIeld 5</div>
+									</li>
+	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-lg-4">
+				<div class="panel">
+					<div class="panel-heading">
+						<h4>Gas Station</h4>
+					</div>
+					<div class="panel-body" id="gas">
+						<div class="row">
+							<div class="col-md-12 bold">
+								<ul style="list-style: circle">
+									<li>
+										<div class="data">Field 1</div>
+									</li>
+									<li>
+										<div class="data">Field 2</div>
+									</li>
+									<li>
+										<div class="data">FIeld 3</div>
+									</li>
+									<li>
+										<div class="data">Field 4</div>
+									</li>
+									<li>
+										<div class="data">FIeld 5</div>
+									</li>
+	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel" id="restaurant">
+					<div class="panel-heading">
+						<h5>Restaurant Search</h5>
+					</div>
+					<div class="panel-body">
+						<form role="form">
+							<div class="form-group">
+								<label for="restaurants">Name</label>
+								<input type="text" class="form-control" id="restaurant" name="restaurant">
+								<button class="btn" type="submit" id="formsubmit">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-md-6">
+				<div class="panel" id="restaurant">
+					<div class="panel-heading">
+						<h5>Gas Station Search</h5>
+					</div>
+					<div class="panel-body">
+						<form role="form">
+							<div class="form-group">
+								<label for="restaurants">Name</label>
+								<input type="text" class="form-control" id="restaurant" name="restaurant">
+								<button class="btn" type="submit" id="formsubmit">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	 
+	
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
   <script src="assets/javascript/zomatoApp.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn5ySae8mKDqxCbjeeF8qw16nylIjhUu0&callback=initMap" async
         defer></script>
 <script src="assets/javascript/steven-js.js"></script>
 </body>
+
 </html>
