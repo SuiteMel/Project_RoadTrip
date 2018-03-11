@@ -56,7 +56,7 @@ $(function(){
         // console.log(buttonLocation);
         var options = {
             zoom: 12,
-            center: {lat:39.0997, lng:-94.5786}
+            center: {lat: locationLat, lng: locationLng}
         }
         // Create a map object and specify the DOM element for display.
         var map = new google.maps.Map(document.getElementById('map'), options);
