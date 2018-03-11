@@ -1,6 +1,7 @@
 
 
 $(function(){
+    console.log("ready");
 
     var config = {
         apiKey: "AIzaSyARYyZkZLUQZOyJQU7cMku9y1ypSjCz5iE",
@@ -28,12 +29,19 @@ $(function(){
           method: "POST"
         
        }).then(function(response) {
-          console.log("response: " + response);
+        //   console.log("response: " + response);
             
-            database.ref().set(response.location);
-            console.log("firebase should update");
+            database.ref().push(response.location);
+            
+            // console.log("firebase should update");
         });
 
+        database.ref().limitToFirst(1).on("child_added", function(snapshot) {
+            var locationLat = snapshot.val().lat;
+            var locationLng = snapshot.val().lng;
+            console.log("lat: " + locationLat);
+            console.log("lng: " + locationLng);
+        });
 });
 
     });
@@ -45,7 +53,7 @@ $(function(){
         // map options   zoom max is 14. 
         var options = {
             zoom: 12,
-            center: {lat: 50, lng: 50}
+            center: {lat: 39.1658578, lng: -94.5160497}
         }
         // Create a map object and specify the DOM element for display.
         var map = new google.maps.Map(document.getElementById('map'), options);
