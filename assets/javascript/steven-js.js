@@ -52,23 +52,26 @@ $(function(){
 
 
    function initMap() {
-    
-             var options = {
-                zoom: 8,
-                center: {lat:39, lng: -94}
-            }
+
+             
 
             $("#button-2").on("click", function() {
-                var map = new google.maps.Map(document.getElementById('map'), options);
-                var userLat = $("#user-Lat").val();
-                var userLng = $("#user-Lng").val();
-                var userLatLng = {lat: userLat, lng: userLng};
-                    console.log("userlatlng: " + userLatLng);
                 
-                    console.log("show user Lat: " + userLat);
-                    console.log("show user Lng: " + userLng);
+               
+                // var userLat = $("#user-Lat").val();
+                // var userLng = $("#user-Lng").val();
+                var userLatLng = {lat: $("#user-Lat").val(), lng: $("#user-Lng").val()};
+                    console.log("userlatlng: " + userLatLng);                
+                    // console.log("show user Lat: " + userLat);
+                    // console.log("show user Lng: " + userLng);
+               
+                    var options = {
+                    zoom: 8,
+                    center: userLatLng
+                }
+                var map = new google.maps.Map(document.getElementById('map'), options);
                 var marker = new google.maps.Marker({
-                    position: userLatLng, 
+                    position: {}, 
                     map: map
                 
                 });
