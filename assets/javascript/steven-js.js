@@ -12,11 +12,11 @@ $(function(){
       };
       firebase.initializeApp(config);
       var database = firebase.database();
-     
-      $("button").on("click", function() {
+
+      $("#button-1").on("click", function() {
         // var locationDataBase = "";
         var location = $(this).attr("dataLocation");
-          var queryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBn5ySae8mKDqxCbjeeF8qw16nylIjhUu0";
+        var queryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBn5ySae8mKDqxCbjeeF8qw16nylIjhUu0";
         
           
 // https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&callback=initMap
@@ -39,53 +39,65 @@ $(function(){
         database.ref().limitToFirst(1).on("child_added", function(snapshot) {
             var locationLat = snapshot.val().lat;
             var locationLng = snapshot.val().lng;
+
+            $("#lat-display").html("Latitude: " + locationLat);
+            $("#lng-display").html("Longitude: " + locationLng);
+
             console.log("lat: " + locationLat);
             console.log("lng: " + locationLng);
             
         });
+    });
 });
 
-    });
 
-   
+   function initMap() {
     
-    function initMap() {
-        //need to change the default location somehow
-        // map options   zoom max is 14. 
-        // var buttonLocation = [locationLat, locationLng];
-        // console.log(buttonLocation);
-        var options = {
-            zoom: 12,
-            center: {lat: locationLat, lng: locationLng}
-        }
+             var options = {
+                zoom: 8,
+                center: {lat:39, lng: -94}
+            }
+
+            $("#button-2").on("click", function() {
+                var map = new google.maps.Map(document.getElementById('map'), options);
+                var userLat = $("#user-Lat").val();
+                var userLng = $("#user-Lng").val();
+                var userLatLng = {lat: userLat, lng: userLng};
+                    console.log("userlatlng: " + userLatLng);
+                
+                    console.log("show user Lat: " + userLat);
+                    console.log("show user Lng: " + userLng);
+                var marker = new google.maps.Marker({
+                    position: userLatLng, 
+                    map: map
+                
+                });
+               
+                var infoWindow = new google.maps.InfoWindow({
+                    content: '<h3>This is a test message!</h3>'
+                })
+            
+                    marker.addListener('click', function(){
+                        infoWindow.open(map, marker);
+                    })
+            
+    
+            addMarker(userLat);
+            function addMarker(coords) {
+                var marker = new google.maps.Marker({
+                    position: coords,
+                    map: map,
+                    icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+    
+                });
+            }
+    
+            });
         // Create a map object and specify the DOM element for display.
-        var map = new google.maps.Map(document.getElementById('map'), options);
-
-        
-        // add a marker 
-        var marker = new google.maps.Marker({
-            position: {lat: 39.0997, lng: -94.5786}, 
-            map: map
-        });
-
-       var infoWindow = new google.maps.InfoWindow({
-            content: '<h3>This is a test message!</h3>'
-        })
-        marker.addListener('click', function(){
-            infoWindow.open(map, marker);
-        })
-        
-
-        addMarker({lat: 38.8135,lng: -94.5990});
+            
+         // add a marker 
+            
 
         // add marker function 
-        function addMarker(coords) {
-            var marker = new google.maps.Marker({
-                position: coords,
-                map: map,
-                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-
-            });
-        }
 
     }    
