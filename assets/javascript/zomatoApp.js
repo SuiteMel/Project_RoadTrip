@@ -19,16 +19,31 @@ var queryURL = "https://developers.zomato.com/api/v2.1/search";
     headers: {"user-key": "347df1f1ac7c392cc9a8c55d2bbf3ed3"},
     method: 'GET'
   }).then(function (response) {
-    var resName = response.restaurants[0].restaurant.name;
-    var resLocation = response.restaurants[0].restaurant.location.address;
 
-    var resCuisine = response.restaurants[0].restaurant.cuisines;
-    var price_range = response.restaurants[0].restaurant.price_range;
-    var currency = response.restaurants[0].restaurant.currency;
+    for (i=0; i<5; i++) {
+    var resName = $("<dt>").text(response.restaurants[i].restaurant.name);
+    var resLocation = response.restaurants[i].restaurant.location.address;
 
-    var resRating = response.restaurants[0].restaurant.user_rating.aggregate_rating;
-    var ratingText = response.restaurants[0].restaurant.user_rating.rating_text;
-    var resVotes = response.restaurants[0].restaurant.user_rating.votes;
+    var resCuisine = response.restaurants[i].restaurant.cuisines
+    var price_range = response.restaurants[i].restaurant.price_range;
+    var currency = response.restaurants[i].restaurant.currency;
 
-    console.log(response.results_found);
+    var rangePrice = currency.repeat(price_range); 
+
+    var resRating = $("<span>").text(response.restaurants[i].restaurant.user_rating.aggregate_rating);
+    var ratingText = response.restaurants[i].restaurant.user_rating.rating_text;
+    var ratingColor = response.restaurants[i].restaurant.user_rating.rating_color;
+    var resVotes = response.restaurants[i].restaurant.user_rating.votes;
+
+    resRating.css("color", "#" + ratingColor);
+    
+
+    var resTyLoc = $("<dd>").append(resCuisine + " &#9679; " + resLocation).addClass("mb-0");
+
+    var resRatePrice = $("<dd>");
+    resRatePrice.append(resRating, " " + ratingText + " (" + resVotes + " votes)" + " &#9679; " + rangePrice);
+
+    var list = $("<dl>").append(resName, resTyLoc, resRatePrice);
+    $("#food").append(list);
+  }
   });
