@@ -47,21 +47,21 @@ $(function(){
         database.ref().limitToFirst(1).on("child_added", function(snapshot) {
             var locationLat = snapshot.val().lat;
             var locationLng = snapshot.val().lng;
-            var zipCode = snapshot.val().postal_code;
+            // var zipCode = snapshot.val().postal_code;
 
             $("#lat-display").html("Latitude: " + locationLat);
             $("#lng-display").html("Longitude: " + locationLng);
-            $("#zip-code").html("Zip Code: " + zipCode);
+            // $("#zip-code").html("Zip Code: " + zipCode);
 
-            console.log("lat: " + locationLat);
-            console.log("lng: " + locationLng);
-            console.log("zip: " + zipCode);
+            // console.log("lat: " + locationLat);
+            // console.log("lng: " + locationLng);
+            // console.log("zip: " + zipCode);
             
     
 
              
 
-            $("#button-2").on("click", function() {
+            // $("#button-2").on("click", function() {
                 var parsedLat = parseFloat(locationLat);
                 var parsedLng = parseFloat(locationLng);
                
@@ -69,7 +69,7 @@ $(function(){
                 // var userLng = $("#user-Lng").val();
                 // var userLatLng = {lat: $("#user-Lat").val(), lng: $("#user-Lng").val()};
                 var userLatLng = {lat: parsedLat, lng: parsedLng};
-                    console.log("userlatlng: " + userLatLng);                
+                    // console.log("userlatlng: " + userLatLng);                
                     // console.log("show user Lat: " + userLat);
                     // console.log("show user Lng: " + userLng);
                     
@@ -105,7 +105,7 @@ $(function(){
                 });
             }
     
-            });
+            // });
 
         });
     });
