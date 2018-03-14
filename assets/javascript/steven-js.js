@@ -82,7 +82,8 @@ $(function(){
                 var map = new google.maps.Map(document.getElementById('map'), options);
                 var marker = new google.maps.Marker({
                     position: userLatLng, 
-                    map: map
+                    map: map,
+                    icon: 'assets/images/markers/darkgreenU.png '
                 
                 });
                
@@ -100,8 +101,8 @@ $(function(){
                 var marker = new google.maps.Marker({
                     position: coords,
                     map: map,
-                    icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-    
+                    icon: 'assets/images/markers/darkgreenU.png '
+    // "\assets\images\Google Maps Markers\green_MarkerT.png"
                 });
             }
     
