@@ -14,12 +14,14 @@ $(function(){
       
 
 });
-            
+
+
+
 
    function initMap() {
-    var database = firebase.database();
-
+    
     $("#button-1").on("click", function() {
+        var database = firebase.database();
         // var locationDataBase = "";
         var location = $(this).attr("dataLocation");
         var queryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyARYyZkZLUQZOyJQU7cMku9y1ypSjCz5iE";
@@ -60,8 +62,8 @@ $(function(){
              
 
             $("#button-2").on("click", function() {
-                var parsedLat = parseInt(locationLat);
-                var parsedLng = parseInt(locationLng);
+                var parsedLat = parseFloat(locationLat);
+                var parsedLng = parseFloat(locationLng);
                
                 // var userLat = $("#user-Lat").val();
                 // var userLng = $("#user-Lng").val();
@@ -104,12 +106,7 @@ $(function(){
             }
     
             });
-        // Create a map object and specify the DOM element for display.
-            
-         // add a marker 
-            
 
-        // add marker function 
+        });
     });
-});
-    }    
+}    
