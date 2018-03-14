@@ -1,14 +1,24 @@
 
 
-var userInput = "";
+var userInput = $("#restInput").val().trim();
+
 
 var latitude = "38.8989439";
 var longitude = "-94.7256576";
 
+$("#foodFormsubmit").on("click", function (event) {
+  event.preventDefault();
+  getFood(latitude, longitude);
+});
+
+
+
+function getFood(lati, long) {
+  
 var queryURL = "https://developers.zomato.com/api/v2.1/search";
   queryURL += '?' + $.param({
-    'lat': latitude,
-    'lon': longitude,
+    'lat': lati,
+    'lon': long,
     'sort': "real_distance",
     'start': 0,
     'q': userInput
@@ -47,3 +57,4 @@ var queryURL = "https://developers.zomato.com/api/v2.1/search";
     $("#food").append(list);
   }
   });
+}
