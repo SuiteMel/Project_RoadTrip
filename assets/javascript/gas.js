@@ -1,40 +1,44 @@
  $(document).ready(function () {
     
-    var station = $(this).data('name');
-    var apiUrl = "http://api.mygasfeed.com/stations/radius/38/-94/25/reg/distance/dfoh89ze54.json";
-    $.ajax({
-        url: apiUrl,
-        method: 'GET'
-    }).then(function (response) {
-        console.log(response);
-        
+    $("#gasStation").on("click", function(event) {
+        event.preventDefault();
+
+        var station = $(this).data('name');
+        var apiUrl = "http://api.mygasfeed.com/stations/radius/38/-94/25/reg/distance/dfoh89ze54.json";
+        $.ajax({
+            url: apiUrl,
+            method: 'GET'
+        }).then(function (response) {
+            console.log(response);
+            displayGasList(response.stations);
+        }); // close ajax
+
+    }); // close onClick
+ }); // end of onDocumentReady
+
+var displayGasList = function(gasList) {
+
+    // clear box
+
+    // create list
      for (var i = 0; i < 5; i++) {
-         
-       
-    var gasLatitude= response.stations[i].lat;
-    console.log(gasLatitude)
-    var gasLongitude = response.stations[i].lng;
-    console.log(gasLongitude)
-    var gasName = response.stations[i].station;
-    console.log(gasName)
-    var gasDistance = response.stations[i].distance;
-    console.log(gasDistance)
-    var gasAddress = response.stations[i].address;
-    console.log(gasAddress)
-    var gasCity = response.stations[i].city;
-    console.log(gasCity)
-    var gasPrice = response.stations[i].reg_price;
-    console.log(gasPrice)
-    var dieselPrice = response.stations[i].diesel_price;
-    console.log(dieselPrice)
-   
-     }
-    
-   
-    });
+        var gasLatitude=gasList[i].lat;
+        console.log(gasLatitude)
+        var gasLongitude = gasList[i].lng;
+        console.log(gasLongitude)
+        var gasName = gasList[i].station;
+        console.log(gasName)
+        var gasDistance = gasList[i].distance;
+        console.log(gasDistance)
+        var gasAddress = gasList[i].address;
+        console.log(gasAddress)
+        var gasCity = gasList[i].city;
+        console.log(gasCity)
+        var gasPrice = gasList[i].reg_price;
+        console.log(gasPrice)
+        var dieselPrice = gasList[i].diesel_price;
+        console.log(dieselPrice)
+    }
 
-   
-});
-    
-
-
+    // add to box
+};
