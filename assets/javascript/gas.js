@@ -1,4 +1,4 @@
-$(document).ready(function () {
+ $(document).ready(function () {
     
     var station = $(this).data('name');
     var apiUrl = "http://api.mygasfeed.com/stations/radius/38/-94/25/reg/distance/dfoh89ze54.json";
@@ -7,27 +7,30 @@ $(document).ready(function () {
         method: 'GET'
     }).then(function (response) {
         console.log(response);
-
         
-    var gasLatitude= response.stations[0].lat;
+     for (var i = 0; i < 5; i++) {
+         
+       
+    var gasLatitude= response.stations[i].lat;
     console.log(gasLatitude)
-    var gasLongitude = response.stations[0].lng;
+    var gasLongitude = response.stations[i].lng;
     console.log(gasLongitude)
-    var gasName = response.stations[0].station;
+    var gasName = response.stations[i].station;
     console.log(gasName)
-    var gasAddress = response.stations[0].address;
+    var gasDistance = response.stations[i].distance;
+    console.log(gasDistance)
+    var gasAddress = response.stations[i].address;
     console.log(gasAddress)
-    var gasCity = response.stations[0].city;
+    var gasCity = response.stations[i].city;
     console.log(gasCity)
-    var gasPrice = response.stations[0].reg_price;
+    var gasPrice = response.stations[i].reg_price;
     console.log(gasPrice)
-    var gasDiesel = response.stations[0].diesel;
-    console.log(gasDiesel)
-    var dieselPrice = response.stations[0].diesel_price;
+    var dieselPrice = response.stations[i].diesel_price;
     console.log(dieselPrice)
-
-
-
+   
+     }
+    
+   
     });
 
    
