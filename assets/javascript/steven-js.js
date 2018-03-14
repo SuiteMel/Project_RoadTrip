@@ -11,12 +11,18 @@ $(function(){
         storageBucket: "project-roadtrip.appspot.com",
       };
       firebase.initializeApp(config);
-      var database = firebase.database();
+      
 
-      $("#button-1").on("click", function() {
+});
+            
+
+   function initMap() {
+    var database = firebase.database();
+
+    $("#button-1").on("click", function() {
         // var locationDataBase = "";
         var location = $(this).attr("dataLocation");
-        var queryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBn5ySae8mKDqxCbjeeF8qw16nylIjhUu0";
+        var queryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyARYyZkZLUQZOyJQU7cMku9y1ypSjCz5iE";
         
           
 // https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&callback=initMap
@@ -39,39 +45,41 @@ $(function(){
         database.ref().limitToFirst(1).on("child_added", function(snapshot) {
             var locationLat = snapshot.val().lat;
             var locationLng = snapshot.val().lng;
+            var zipCode = snapshot.val().postal_code;
 
             $("#lat-display").html("Latitude: " + locationLat);
             $("#lng-display").html("Longitude: " + locationLng);
+            $("#zip-code").html("Zip Code: " + zipCode);
 
             console.log("lat: " + locationLat);
             console.log("lng: " + locationLng);
+            console.log("zip: " + zipCode);
             
-        });
-    });
-});
-
-
-   function initMap() {
+    
 
              
 
             $("#button-2").on("click", function() {
-                
+                var parsedLat = parseInt(locationLat);
+                var parsedLng = parseInt(locationLng);
                
                 // var userLat = $("#user-Lat").val();
                 // var userLng = $("#user-Lng").val();
-                var userLatLng = {lat: $("#user-Lat").val(), lng: $("#user-Lng").val()};
+                // var userLatLng = {lat: $("#user-Lat").val(), lng: $("#user-Lng").val()};
+                var userLatLng = {lat: parsedLat, lng: parsedLng};
                     console.log("userlatlng: " + userLatLng);                
                     // console.log("show user Lat: " + userLat);
                     // console.log("show user Lng: " + userLng);
-               
+                    
+
+
                     var options = {
-                    zoom: 8,
+                    zoom: 12,
                     center: userLatLng
                 }
                 var map = new google.maps.Map(document.getElementById('map'), options);
                 var marker = new google.maps.Marker({
-                    position: {}, 
+                    position: userLatLng, 
                     map: map
                 
                 });
@@ -85,7 +93,7 @@ $(function(){
                     })
             
     
-            addMarker(userLat);
+            addMarker(userLatLng);
             function addMarker(coords) {
                 var marker = new google.maps.Marker({
                     position: coords,
@@ -102,5 +110,6 @@ $(function(){
             
 
         // add marker function 
-
+    });
+});
     }    
