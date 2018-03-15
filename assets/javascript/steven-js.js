@@ -9,16 +9,23 @@ $(function () {
         storageBucket: "project-roadtrip.appspot.com",
     };
     firebase.initializeApp(config);
+    
     initMap();
     
 });
+
+
 var parsedLat = null;
 var parsedLng = null;
 var foodResults = [];
 
+
+
 $("#button-1").on("click", function () {
+    
     getFood(parsedLat, parsedLng);
     displayGasList(parsedLat, parsedLng);
+    mapCreation(parsedLat, parsedLng);
     
 });
 
@@ -62,46 +69,7 @@ function initMap() {
             parsedLng = parseFloat(locationLng);
             console.log(parsedLat, parsedLng);
 
-            var userLatLng = {
-                lat: parsedLat,
-                lng: parsedLng
-            };
-
-            console.log(userLatLng);
-
-
-            var options = {
-                zoom: 12,
-                center: userLatLng
-            }
-            var map = new google.maps.Map(document.getElementById('map'), options);
-            var marker = new google.maps.Marker({
-                position: userLatLng,
-
-                map: map,
-                icon: 'assets/images/markers/darkgreenU.png '
-
-            });
-            //console.log(marker);
-            var infoWindow = new google.maps.InfoWindow({
-                content: '<h3>This is a test message!</h3>'
-            })
-
-            marker.addListener('click', function () {
-                infoWindow.open(map, marker);
-            })
-
-
-            addMarker(userLatLng);
-
-            function addMarker(coords) {
-                var marker = new google.maps.Marker({
-                    position: coords,
-                    map: map,
-                    icon: 'assets/images/markers/darkgreenU.png '
-
-                });
-            }
+            
 
         });
 
@@ -110,18 +78,66 @@ function initMap() {
     
 }
 
-var userInput = $("#restInput").val().trim();
+function mapCreation(parsedLat, parsedLng) {
+    var userLatLng = {
+        lat: parsedLat,
+        lng: parsedLng
+    };
 
+    console.log(userLatLng);
+    
+    var options = {
+        zoom: 12,
+        center: userLatLng
+    }
+    var map = new google.maps.Map(document.getElementById('map'), options);
+    var marker = new google.maps.Marker({
+        position: userLatLng,
+
+        map: map,
+        icon: 'assets/images/markers/darkgreenU.png '
+
+    });
+    //console.log(marker);
+    var infoWindow = new google.maps.InfoWindow({
+        content: '<h3>This is a test message!</h3>'
+    })
+
+    marker.addListener('click', function () {
+        infoWindow.open(map, marker);
+    })
+
+
+    addMarker(userLatLng);
+
+    function addMarker(coords) {
+        var marker = new google.maps.Marker({
+            position: coords,
+            map: map,
+            icon: 'assets/images/markers/darkgreenU.png '
+
+        });
+    }
+}
+
+
+$("#foodSubmit").on("click", function (event) {
+    event.preventDefault();
+    getFood(parsedLat, parsedLng);
+    mapCreation(parsedLat, parsedLng);
+});
 
 $("#foodFormsubmit").on("click", function (event) {
     event.preventDefault();
     getFood(parsedLat, parsedLng);
+    mapCreation(parsedLat, parsedLng);
 });
 
 
 
 function getFood(lati, long) {
-
+    var userInput = $("#restInput").val().trim();
+    console.log(userInput);
     var foodQueryURL = "https://developers.zomato.com/api/v2.1/search";
     foodQueryURL += '?' + $.param({
         'lat': lati,
@@ -207,12 +223,13 @@ $("#gasStation").on("click", function (event) {
     event.preventDefault();
     $("#station").empty();//clear button
     displayGasList(parsedLat, parsedLng);
+    mapCreation(parsedLat, parsedLng);
 }); // close onClick
 
 
 var displayGasList = function (lati, long) {
 
-    var apiUrl = "http://api.mygasfeed.com/stations/radius/" + lati + "/" + long + "/10/reg/distance/dfoh89ze54.json";
+    var apiUrl = "http://api.mygasfeed.com/stations/radius/" + lati + "/" + long + "/25/reg/distance/dfoh89ze54.json";
     $.ajax({
         url: apiUrl,
         method: 'GET'
@@ -254,4 +271,7 @@ var displayGasList = function (lati, long) {
 
         }
     });
-} 
+}
+
+// getFood(parsedLat, parsedLng);
+// displayGasList(parsedLat, parsedLng);
