@@ -13,7 +13,7 @@ $(function () {
 var parsedLat = null;
 var parsedLng = null;
 var foodResults = [];
-
+var map;
 function initMap() {
 
     $("#button-1").on("click", function () {
@@ -93,7 +93,8 @@ function initMap() {
 
         });
     });
-}
+
+//------------------------------
 
 var userInput = $("#restInput").val().trim();
 
@@ -165,10 +166,10 @@ $("#food").empty();
   }
   console.log(foodResults);
 
-  foodResults.forEach(function(res) {
+  foodResults.forEach(function(position) {
 
     var marker = new google.maps.Marker({
-        position: res,
+        position: position,
         map: map,
         icon: 'assets/images/markers/darkgreenU.png '
 
@@ -183,9 +184,15 @@ $("#food").empty();
     })
 
 
-    addMarker(userLatLng);
+    addMarker(position);
 })
   
   });
 }
+
+//------------------------------
+    
+}
+
+
 
