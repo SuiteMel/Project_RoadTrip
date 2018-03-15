@@ -1,10 +1,14 @@
 $(document).ready(function () {
 
-var lati=38;
+var latitude=38;
 var longitude=-94;
     
     $("#gasStation").on("click", function(event) {
         event.preventDefault();
+        $("#station").empty();//clear button
+        displayGasList(latitude, longitude);
+    }); // close onClick
+ }); // end of onDocumentReady
 
         var station = $(this).data('name');
         var apiUrl = "http://api.mygasfeed.com/stations/radius/"+ lati +"/" + longitude +"/25/reg/distance/dfoh89ze54.json";
@@ -12,15 +16,7 @@ var longitude=-94;
             url: apiUrl,
             method: 'GET'
         }).then(function (response) {
-            console.log(response);
-            displayGasList(response.stations);
-        }); // close ajax
-
-    }); // close onClick
- }); // end of onDocumentReady
-
-var displayGasList = function(gasList) {
-    $("#gasStation").empty();//clear button
+            var gasList = response.stations;
 
   $("#gas").empty();  // clear box
 
@@ -42,5 +38,5 @@ var displayGasList = function(gasList) {
         
     }
 
-    
+}); // close ajax  
 };
