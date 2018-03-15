@@ -129,8 +129,10 @@ $("#foodSubmit").on("click", function (event) {
 
 $("#foodFormsubmit").on("click", function (event) {
     event.preventDefault();
+    
     getFood(parsedLat, parsedLng);
     mapCreation(parsedLat, parsedLng);
+    $("#restInput").val("");
 });
 
 
