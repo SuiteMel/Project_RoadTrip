@@ -1,5 +1,5 @@
 $(function () {
-    console.log("ready");
+    //console.log("ready");
 
     var config = {
         apiKey: "AIzaSyARYyZkZLUQZOyJQU7cMku9y1ypSjCz5iE",
@@ -9,14 +9,22 @@ $(function () {
         storageBucket: "project-roadtrip.appspot.com",
     };
     firebase.initializeApp(config);
+    initMap();
+    
 });
 var parsedLat = null;
 var parsedLng = null;
 var foodResults = [];
 
+$("#button-1").on("click", function () {
+    getFood(parsedLat, parsedLng);
+    displayGasList(parsedLat, parsedLng);
+    
+});
+
 function initMap() {
 
-    $("#button-1").on("click", function () {
+    // $("#button-1").on("click", function () {
         var database = firebase.database();
 
         var location = $(this).attr("dataLocation");
@@ -33,29 +41,33 @@ function initMap() {
             method: "POST"
 
         }).then(function (response) {
-
+            console.log("Pulled Location: ", response.location);
+            console.log("-----");
             database.ref().push(response.location);
+            // console.log("--");
+            
 
         });
 
-        database.ref().limitToFirst(1).on("child_added", function (snapshot) {
-            var locationLat = snapshot.val().lat;
-            var locationLng = snapshot.val().lng;
-
+        database.ref().limitToLast(1).on("child_added", function (childSnapshot) {
+            var locationLat = childSnapshot.val().lat;
+            var locationLng = childSnapshot.val().lng;
+            console.log("My Location: " + locationLat, locationLng);
+            console.log("-");
 
             $("#lat-display").html("Latitude: " + locationLat);
             $("#lng-display").html("Longitude: " + locationLng);
 
             parsedLat = parseFloat(locationLat);
             parsedLng = parseFloat(locationLng);
-
+            console.log(parsedLat, parsedLng);
 
             var userLatLng = {
                 lat: parsedLat,
                 lng: parsedLng
             };
 
-
+            console.log(userLatLng);
 
 
             var options = {
@@ -70,7 +82,7 @@ function initMap() {
                 icon: 'assets/images/markers/darkgreenU.png '
 
             });
-            console.log(marker);
+            //console.log(marker);
             var infoWindow = new google.maps.InfoWindow({
                 content: '<h3>This is a test message!</h3>'
             })
@@ -92,14 +104,14 @@ function initMap() {
             }
 
         });
-    });
+
+        
+    // });
+    
 }
 
 var userInput = $("#restInput").val().trim();
 
-
-// var latitude = "38.8989439";
-// var longitude = "-94.7256576";
 
 $("#foodFormsubmit").on("click", function (event) {
     event.preventDefault();
@@ -124,13 +136,12 @@ function getFood(lati, long) {
         headers: { "user-key": "347df1f1ac7c392cc9a8c55d2bbf3ed3" },
         method: 'GET'
     }).then(function (resp) {
-        console.log(foodQueryURL);
 
         // console.log("food: " ,foodResults);
         foodResults = [];
         $("#food").empty();
         for (i = 0; i < 5; i++) {
-            console.log("for loop");
+           // console.log("for loop");
             // console.log(response.restaurants[i]);
             // var restaurantCords = {
             //     lat: parseInt(response.restaurants[i].restaurant.location.latitude),
@@ -163,7 +174,7 @@ function getFood(lati, long) {
             var list = $("<dl>").append(resName, resTyLoc, resRatePrice);
             $("#food").append(list);
         }
-        console.log(foodResults);
+        // console.log(foodResults);
 
         foodResults.forEach(function (res) {
 
@@ -213,28 +224,28 @@ var displayGasList = function (lati, long) {
         // create list
         for (var i = 0; i < 5; i++) {
             var gasLatitude = gasList[i].lat;
-            console.log(gasLatitude)
+            
             var gasLongitude = gasList[i].lng;
-            console.log(gasLongitude)
+            
             var gasName = $("<dt>").text(gasList[i].station);
-            console.log(gasName)
+            
             var gasDistance = $("<dd>").text(gasList[i].distance).addClass("mb-0");
-            console.log(gasDistance)
+            
 
             var gasZip = gasList[i].zip;
-            console.log(gasZip)
+            
             var gasAddress = $("<dd>").text(gasList[i].address).addClass("mb-0");
-            console.log(gasAddress)
+            
             var gasCity = gasList[i].city;
-            console.log(gasCity)
+            
 
             var gasLoc = $("<dd>").text(gasCity + " " + gasZip).addClass("mb-0");
 
 
             var gasPrice = $("<dd>").text("Regular: " + gasList[i].reg_price).addClass("mb-0");
-            console.log(gasPrice)
+            
             var dieselPrice = $("<dd>").text("Diesel: " + gasList[i].diesel_price).addClass("mb-0");
-            console.log(dieselPrice)
+            
 
 
             var gasDesc = $("<dl>").append(gasName, gasDistance, gasAddress, gasLoc, gasPrice, dieselPrice);
