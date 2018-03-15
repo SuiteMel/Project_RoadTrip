@@ -9,9 +9,10 @@ $(function () {
         storageBucket: "project-roadtrip.appspot.com",
     };
     firebase.initializeApp(config);
-
-
 });
+var parsedLat = null;
+var parsedLng = null;
+var foodResults = [];
 
 function initMap() {
 
@@ -45,8 +46,8 @@ function initMap() {
             $("#lat-display").html("Latitude: " + locationLat);
             $("#lng-display").html("Longitude: " + locationLng);
 
-            var parsedLat = parseFloat(locationLat);
-            var parsedLng = parseFloat(locationLng);
+            parsedLat = parseFloat(locationLat);
+            parsedLng = parseFloat(locationLng);
 
 
             var userLatLng = {
@@ -64,11 +65,12 @@ function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), options);
             var marker = new google.maps.Marker({
                 position: userLatLng,
+                
                 map: map,
                 icon: 'assets/images/markers/darkgreenU.png '
 
             });
-
+            console.log(marker);
             var infoWindow = new google.maps.InfoWindow({
                 content: '<h3>This is a test message!</h3>'
             })
@@ -92,3 +94,98 @@ function initMap() {
         });
     });
 }
+
+var userInput = $("#restInput").val().trim();
+
+
+// var latitude = "38.8989439";
+// var longitude = "-94.7256576";
+
+$("#foodFormsubmit").on("click", function (event) {
+  event.preventDefault();
+  getFood(parsedLat, parsedLng);
+});
+
+
+
+function getFood(lati, long) {
+  
+var queryURL = "https://developers.zomato.com/api/v2.1/search";
+  queryURL += '?' + $.param({
+    'lat': lati,
+    'lon': long,
+    'sort': "real_distance",
+    'start': 0,
+    'q': userInput
+  });
+
+  $.ajax({
+    url: queryURL,
+    headers: {"user-key": "347df1f1ac7c392cc9a8c55d2bbf3ed3"},
+    method: 'GET'
+  }).then(function (response) {
+// console.log(response);
+
+console.log("food: " ,foodResults);
+foodResults = [];
+$("#food").empty();
+    for (i=0; i<5; i++) {
+        console.log("for loop");
+        // console.log(response.restaurants[i]);
+        var restaurantCords = {
+            lat: parseInt(response.restaurants[i].restaurant.location.latitude),
+            lng: parseInt(response.restaurants[i].restaurant.location.longitude)
+        };
+
+        foodResults.push(restaurantCords);
+    var resName = $("<dt>").text(response.restaurants[i].restaurant.name);
+    var resLocation = response.restaurants[i].restaurant.location.address;
+
+    var resCuisine = response.restaurants[i].restaurant.cuisines
+    var price_range = response.restaurants[i].restaurant.price_range;
+    var currency = response.restaurants[i].restaurant.currency;
+
+    var rangePrice = currency.repeat(price_range); 
+
+    var resRating = $("<span>").text(response.restaurants[i].restaurant.user_rating.aggregate_rating);
+    var ratingText = response.restaurants[i].restaurant.user_rating.rating_text;
+    var ratingColor = response.restaurants[i].restaurant.user_rating.rating_color;
+    var resVotes = response.restaurants[i].restaurant.user_rating.votes;
+
+    resRating.css("color", "#" + ratingColor);
+    
+
+    var resTyLoc = $("<dd>").append(resCuisine + " &#9679; " + resLocation).addClass("mb-0");
+
+    var resRatePrice = $("<dd>");
+    resRatePrice.append(resRating, " " + ratingText + " (" + resVotes + " votes)" + " &#9679; " + rangePrice);
+
+    var list = $("<dl>").append(resName, resTyLoc, resRatePrice);
+    $("#food").append(list);
+  }
+  console.log(foodResults);
+
+  foodResults.forEach(function(res) {
+
+    var marker = new google.maps.Marker({
+        position: res,
+        map: map,
+        icon: 'assets/images/markers/darkgreenU.png '
+
+    });
+
+    var infoWindow = new google.maps.InfoWindow({
+        content: '<h3>This is a test message!</h3>'
+    })
+
+    marker.addListener('click', function () {
+        infoWindow.open(map, marker);
+    })
+
+
+    addMarker(userLatLng);
+})
+  
+  });
+}
+
