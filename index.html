@@ -17,33 +17,35 @@
   <!-- <link rel="stylesheet" type="text/css" href="assets/css/steven-css.css"> -->
 </head>
 
-<body>
+<body style="background-color:rgb(77, 177, 160)">
 
   <header class="header">
     <div class="container-fluid">
-      <h1 class="display-4 text-center">
+      <div class="display-4 text-center">
         Project Road Trip!
       </h1>
-    </div>
+    <br>
+  <br>
+</div>
   </header>
 
   <main class="container-fluid">
     <div class="row">
       <div class="col-md-12">
         <div class="card" id="restaurant">
-          <div class="card-header">
-            <h5>Location Search</h5>
+          <div class="card-header" style="background-color:lightgray">
+            
           </div>
           <div class="card-body" id="test">
             <form role="form">
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary" id="button-1">Get My Location</button>
+                    <button type="button" class="btn btn-secondary" id="button-1">Get My Location</button>
                   </span>
                   <input type="text" class="form-control" id="restaurant" name="restaurant">
                   <span class="input-group-btn">
-                    <button class="btn" type="submit" id="formsubmit">Submit</button>
+                    <button class="btn" type="submit" id="formsubmit">Search</button>
                   </span>
                 </div>
               </div>
@@ -59,7 +61,7 @@
         <div class="card-deck">
 
           <div class="card">
-            <div class="card-header"> 
+            <div class="card-header" style="background-color:lightgray"> 
               <h4>Restaurants <span class="fas fa-utensils"></span> </h4>
             </div>
             <div class="card-body" id="food">
@@ -67,7 +69,7 @@
           </div>
 
           <div class="card">
-            <div class="card-header">
+            <div class="card-header" style="background-color:lightgray">
               <h4>Location <span class="fas fa-map-marker"></span></h4>
             </div>
             <div class="card-body" id="map">
@@ -76,7 +78,7 @@
           </div>
 
           <div class="card">
-            <div class="card-header"> 
+            <div class="card-header" style="background-color:lightgray"> 
               <h4>Gas Station <img src="https://png.icons8.com/ios/50/000000/gas-station-filled.png" style=height:30px width:30px;> </h4>
             </div>
             <div class="card-body" id="gas">
@@ -91,7 +93,7 @@
       <div class="col-lg-12">
         <div class="card-deck">
           <div class="card" id="restaurant">
-            <div class="card-header">
+            <div class="card-header" style="background-color: lightgrey">
               <h5>Restaurant Search</h5>
             </div>
             <div class="card-body">
@@ -99,7 +101,7 @@
                 <div class="form-group">
                   <div class="input-group">
                     <input type="text" class="form-control" id="restInput" name="restaurant">
-                    <button class="btn" type="submit" id="foodFormsubmit">Submit</button>
+                    <button class="btn btn-secondary" type="submit" id="foodFormsubmit">Search</button>
                   </div>
                 </div>
               </form>
@@ -108,7 +110,7 @@
 
 
           <div class="card" id="gasStations">
-            <div class="card-header">
+            <div class="card-header" style="background-color:lightgrey">
               <h5>Gas Station Search</h5>
             </div>
             <div class="card-body">
@@ -116,7 +118,7 @@
                 <div class="form-group">
                   <div class="input-group">
                     <input type="text" class="form-control" id="station" name="station">
-                    <button class="btn" id="gasStation">Submit</button>
+                    <button class="btn btn-secondary" id="gasStation">Search</button>
                   </div>
                 </div>
               </form>
