@@ -1,5 +1,4 @@
 $(function () {
-    //console.log("ready");
 
     var config = {
         apiKey: "AIzaSyARYyZkZLUQZOyJQU7cMku9y1ypSjCz5iE",
@@ -9,9 +8,9 @@ $(function () {
         storageBucket: "project-roadtrip.appspot.com",
     };
     firebase.initializeApp(config);
-    
+
     initMap();
-    
+
 });
 
 
@@ -22,60 +21,42 @@ var foodResults = [];
 
 
 $("#button-1").on("click", function () {
-    
+
     getFood(parsedLat, parsedLng);
     displayGasList(parsedLat, parsedLng);
     mapCreation(parsedLat, parsedLng);
-    
+
 });
 
 function initMap() {
 
-    // $("#button-1").on("click", function () {
-        var database = firebase.database();
+    var database = firebase.database();
 
-        var location = $(this).attr("dataLocation");
-        var queryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyARYyZkZLUQZOyJQU7cMku9y1ypSjCz5iE";
-
-
-        // https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&callback=initMap
-
-        // https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBn5ySae8mKDqxCbjeeF8qw16nylIjhUu0&callback=initMap
+    var location = $(this).attr("dataLocation");
+    var queryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyARYyZkZLUQZOyJQU7cMku9y1ypSjCz5iE";
 
 
-        $.ajax({
-            url: queryURL,
-            method: "POST"
+    // https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&callback=initMap
 
-        }).then(function (response) {
-            console.log("Pulled Location: ", response.location);
-            console.log("-----");
-            database.ref().push(response.location);
-            // console.log("--");
-            
+    // https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBn5ySae8mKDqxCbjeeF8qw16nylIjhUu0&callback=initMap
 
-        });
 
-        database.ref().limitToLast(1).on("child_added", function (childSnapshot) {
-            var locationLat = childSnapshot.val().lat;
-            var locationLng = childSnapshot.val().lng;
-            console.log("My Location: " + locationLat, locationLng);
-            console.log("-");
+    $.ajax({
+        url: queryURL,
+        method: "POST"
 
-            $("#lat-display").html("Latitude: " + locationLat);
-            $("#lng-display").html("Longitude: " + locationLng);
+    }).then(function (response) {
+        database.ref().push(response.location);
+    });
 
-            parsedLat = parseFloat(locationLat);
-            parsedLng = parseFloat(locationLng);
-            console.log(parsedLat, parsedLng);
+    database.ref().limitToLast(1).on("child_added", function (childSnapshot) {
+        var locationLat = childSnapshot.val().lat;
+        var locationLng = childSnapshot.val().lng;
 
-            
+        parsedLat = parseFloat(locationLat);
+        parsedLng = parseFloat(locationLng);
+    });
 
-        });
-
-        
-    // });
-    
 }
 
 function mapCreation(parsedLat, parsedLng) {
@@ -84,8 +65,6 @@ function mapCreation(parsedLat, parsedLng) {
         lng: parsedLng
     };
 
-    console.log(userLatLng);
-    
     var options = {
         zoom: 12,
         center: userLatLng
@@ -98,7 +77,6 @@ function mapCreation(parsedLat, parsedLng) {
         icon: 'assets/images/markers/darkgreenU.png '
 
     });
-    //console.log(marker);
     var infoWindow = new google.maps.InfoWindow({
         content: '<h3>This is a test message!</h3>'
     })
@@ -129,7 +107,7 @@ $("#foodSubmit").on("click", function (event) {
 
 $("#foodFormsubmit").on("click", function (event) {
     event.preventDefault();
-    
+
     getFood(parsedLat, parsedLng);
     mapCreation(parsedLat, parsedLng);
     $("#restInput").val("");
@@ -139,7 +117,7 @@ $("#foodFormsubmit").on("click", function (event) {
 
 function getFood(lati, long) {
     var userInput = $("#restInput").val().trim();
-    console.log(userInput);
+
     var foodQueryURL = "https://developers.zomato.com/api/v2.1/search";
     foodQueryURL += '?' + $.param({
         'lat': lati,
@@ -159,7 +137,7 @@ function getFood(lati, long) {
         foodResults = [];
         $("#food").empty();
         for (i = 0; i < 5; i++) {
-           // console.log("for loop");
+            // console.log("for loop");
             // console.log(response.restaurants[i]);
             // var restaurantCords = {
             //     lat: parseInt(response.restaurants[i].restaurant.location.latitude),
@@ -218,9 +196,6 @@ function getFood(lati, long) {
     });
 }
 
-// var latitude = 38;
-// var longitude = -94;
-
 $("#gasStation").on("click", function (event) {
     event.preventDefault();
     $("#station").empty();//clear button
@@ -243,28 +218,28 @@ var displayGasList = function (lati, long) {
         // create list
         for (var i = 0; i < 5; i++) {
             var gasLatitude = gasList[i].lat;
-            
+
             var gasLongitude = gasList[i].lng;
-            
+
             var gasName = $("<dt>").text(gasList[i].station);
-            
+
             var gasDistance = $("<dd>").text(gasList[i].distance).addClass("mb-0");
-            
+
 
             var gasZip = gasList[i].zip;
-            
+
             var gasAddress = $("<dd>").text(gasList[i].address).addClass("mb-0");
-            
+
             var gasCity = gasList[i].city;
-            
+
 
             var gasLoc = $("<dd>").text(gasCity + " " + gasZip).addClass("mb-0");
 
 
             var gasPrice = $("<dd>").text("Regular: " + gasList[i].reg_price).addClass("mb-0");
-            
+
             var dieselPrice = $("<dd>").text("Diesel: " + gasList[i].diesel_price).addClass("mb-0");
-            
+
 
 
             var gasDesc = $("<dl>").append(gasName, gasDistance, gasAddress, gasLoc, gasPrice, dieselPrice);
@@ -274,6 +249,3 @@ var displayGasList = function (lati, long) {
         }
     });
 }
-
-// getFood(parsedLat, parsedLng);
-// displayGasList(parsedLat, parsedLng);
